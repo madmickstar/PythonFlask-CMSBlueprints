@@ -1,6 +1,6 @@
 from flask import Flask, render_template, abort
-from .admin.models import db
-from .admin import admin_bp
+from cms.admin.models import db
+from cms.admin import admin_bp
 
 
 ## Application Configuration
