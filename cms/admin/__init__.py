@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, abort
-from models import *
+from .admin.models import Type, Content, Setting, User
 
 admin_bp = Blueprint('admin', '/admin',
                       template_folder='templates')
