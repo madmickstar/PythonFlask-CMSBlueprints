@@ -1,5 +1,5 @@
 from flask import Flask, render_template, abort
-from .admin.models import db
+from .admin.models import db, Type, Content, Setting, User
 from .admin import admin_bp
 
 
