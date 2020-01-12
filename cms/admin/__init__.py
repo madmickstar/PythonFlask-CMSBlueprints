@@ -63,7 +63,7 @@ def settings():
 @admin_bp.route('/edit/<id>', methods=['GET', 'POST'])
 def edit(id):
     content = Content.query.get_or_404(id)
-    type = Type.query.get().filter(Type.id == content.type_id)
+    type = Type.query.get(content.type_id)
     types = Type.query.all()
     if request.method == 'POST':
         content.title = request.form['title']
@@ -72,12 +72,12 @@ def edit(id):
         content.body = request.form['body']
         content.updated_at = datetime.utcnow()
         error = None
-        if not content.title:
+        if not request.form['title']:
             error = "Title can not be empty"
         if error is None:
             #db.session.add(content)
             db.session.commit()
-            return redirect(url_for('admin.content',type=type.name))
+            return redirect(url_for('admin.content', type=type.name))
         flash(error)        
     return render_template('admin/content_form.html',
                            types=types, 
