@@ -14,13 +14,13 @@
         <div class="field">
           <label class="label">Title</label>
           <div class="control">
-            <input class="input" name="title"> </input>
+            <input type=text class="input" name="title"> </input>
           </div>
         </div>
         <div class="field">
           <label class="label">Slug</label>
           <div class="control">
-            <input class="input" name="slug"> </input>
+            <input type=text class="input" name="slug"> </input>
           </div>
         </div>
         <div class="field">
@@ -29,7 +29,7 @@
             <div class="select">
               <select name="type_id">
                 {%for type in types%}
-                    <option value="{{ type.id }}"> {{ 'selected' if (type.name == type_name) }} </option>
+                    <option value="{{ type.id }}" {{ 'selected' if (type.name == type_name) }}>{{type.name}} </option>
                 {%endfor%} 
               </select>
             </div>
@@ -43,10 +43,10 @@
         </div>
         <div class="field is-grouped">
           <div class="control">
-            <input class="button" class="is-link" type="submit" value="Submit">
+            <input class="button is-link" type="submit" value="Submit">
           </div>
           <div class="control">
-            <a class="button" class="is-text" "{{ url_for('admin.content', type='type_name') }}">Cancel</a>
+            <a class="button is-text" href="{{ url_for('admin.content', type='type_name') }}">Cancel</a>
           </div>
         </div>
       </form>
