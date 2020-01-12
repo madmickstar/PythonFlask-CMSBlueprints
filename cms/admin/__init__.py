@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, abort, request
 from flask import redirect, url_for, flash
 from .models import Type, Content, Setting, User, db
+from datetime import datetime
 
 admin_bp = Blueprint('admin', __name__, 
                       url_prefix='/admin',
@@ -58,3 +59,32 @@ def users():
 def settings():
     settings = Setting.query.all()
     return render_template('admin/settings.html', title='Settings', settings=settings)
+
+@admin_bp.route('/edit/<id>', methods=['GET', 'POST'])
+def edit(id):
+    content = Content.query.get_or_404(id)
+    type = Type.query.get().filter(Type.id == content.type_id)
+    types = Type.query.all()
+    if request.method == 'POST':
+        content.title = request.form['title']
+        content.slug = request.form['slug']
+        content.type_id = request.form['type_id']
+        content.body = request.form['body']
+        content.updated_at = datetime.utcnow()
+        error = None
+        if not content.title:
+            error = "Title can not be empty"
+        if error is None:
+            #db.session.add(content)
+            db.session.commit()
+            return redirect(url_for('admin.content',type=type.name))
+        flash(error)        
+    return render_template('admin/content_form.html',
+                           types=types, 
+                           title='Edit', 
+                           item_title=content.title, 
+                           slug=content.slug, 
+                           type_name=type.name,
+                           type_id=content.type_id,
+                           body=content.body)
+                           
