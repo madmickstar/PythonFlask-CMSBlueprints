@@ -29,7 +29,7 @@
             <div class="select">
               <select name="type_id">
                 {%for type in types%}
-                    <option value="{{ type.id }}" {{ 'selected' if (type.name == type_name) }}>{{type.name}} </option>
+                    <option value="{{ type.id }}" {{ 'selected' if (type.name == type_name) }}> {{type.name}} </option>
                 {%endfor%} 
               </select>
             </div>
@@ -46,7 +46,7 @@
             <input class="button is-link" type="submit" value="Submit">
           </div>
           <div class="control">
-            <a class="button is-text" href="{{ url_for('admin.content', type='type_name') }}">Cancel</a>
+            <a class="button is-text" href="{{ url_for('admin.content', type=type_name) }}">Cancel</a>
           </div>
         </div>
       </form>
