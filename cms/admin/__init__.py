@@ -25,16 +25,15 @@ def content(type):
 @admin_bp.route('/create/<type>', methods=['GET', 'POST'])
 def create(type):
     if requested_type(type):
-        
         if request.method == 'POST':
             title = request.form['title']
             slug = request.form['slug']
             type_id = request.form['type_id']
             body = request.form['body']
             error = None
-            if title is None:
+            if not title:
                 error = "Title can not be empty"
-            elif type_id is None:
+            elif not type_id:
                 error = "Type can not be empty" 
             if error is None:
                 content = Content(title=title,
@@ -44,8 +43,7 @@ def create(type):
                 db.session.add(content)
                 db.session.commit()
                 return redirect(url_for('admin.content',type=type))
-            else:
-                flash(error)
+            flash(error)
         types = Type.query.all()
         return render_template('admin/content_form.html', title='Create', types=types, type_name=type)
     else:
